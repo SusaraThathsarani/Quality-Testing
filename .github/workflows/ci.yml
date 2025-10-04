@@ -40,7 +40,7 @@ jobs:
           name: test-reports
           path: target/surefire-reports/
 
-      - name:Debug: List test report files
+      - name: Debug: List test report files
         run: ls -R target/surefire-reports
 
       - name: Report Test Results
@@ -50,3 +50,4 @@ jobs:
           name: Maven Test Results
           path: target/surefire-reports/*.xml
           reporter: java-junit
+          
