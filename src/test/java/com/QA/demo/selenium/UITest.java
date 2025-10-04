@@ -30,6 +30,8 @@ public class UITest {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + UUID.randomUUID());
+        options.addArguments("--headless");
+
 
         driver = new ChromeDriver(options);
     }
