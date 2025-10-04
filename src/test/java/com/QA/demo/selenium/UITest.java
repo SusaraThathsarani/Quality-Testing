@@ -30,7 +30,7 @@ public class UITest {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + UUID.randomUUID());
-        options.addArguments("--headless");
+
 
 
         driver = new ChromeDriver(options);
@@ -45,7 +45,7 @@ public class UITest {
 
     @Test
     public void testLoginFormElementsPresent() {
-        driver.get("file:///D:/Quality_Testing-master/src/test/resources/ui/index.html");
+        driver.get("http://localhost:8080/index.html");
 
         WebElement username = driver.findElement(By.id("username"));
         WebElement password = driver.findElement(By.id("password"));
