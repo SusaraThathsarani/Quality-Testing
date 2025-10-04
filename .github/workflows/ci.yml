@@ -34,7 +34,7 @@ jobs:
       - name: Install Chrome
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget unzip xvfb libxi6 libgconf-2-4 libnss3 libxss1 libasound2 libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0
+          sudo apt-get install -y wget unzip xvfb libxi6 libnss3 libxss1 libasound2t64 libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0
           sudo apt-get install -y google-chrome-stable
 
       - name: Install ChromeDriver
@@ -48,8 +48,6 @@ jobs:
         run: |
           npm install -g http-server
           http-server src/test/resources/ui -p 8080 &
-      
-      
 
       - name: Build with Maven
         run: |
