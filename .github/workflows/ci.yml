@@ -40,7 +40,6 @@ jobs:
           name: test-reports
           path: target/surefire-reports/
 
-      # ✅ Add test-reporter with correct permissions
       - name: Report Test Results
         uses: dorny/test-reporter@v1
         if: always()
