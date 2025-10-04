@@ -1,0 +1,53 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Set up JDK 17 (or 11 depending on your project)
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 3. Cache Maven dependencies
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2
+
+      # 4. Run tests
+      - name: Run Maven tests
+        run: mvn clean test
+
+      # 5. Publish JUnit test results
+      - name: Publish test results
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Maven Test Results
+          path: "**/target/surefire-reports/*.xml"
+          reporter: java-junit
+          token: ${{ secrets.GITHUB_TOKEN }}

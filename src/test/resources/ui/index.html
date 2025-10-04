@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test UI</title>
+</head>
+<body>
+<h2>Login Form</h2>
+<form id="loginForm">
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button type="submit">Login</button>
+</form>
+
+<h2>Add Item</h2>
+<input type="text" id="itemInput" placeholder="Enter item" />
+<button id="addItemBtn">Add Item</button>
+<ul id="itemList"></ul>
+
+<script>
+    document.getElementById("addItemBtn").onclick = function () {
+      const item = document.getElementById("itemInput").value;
+      if (item) {
+        const li = document.createElement("li");
+        li.textContent = item;
+        document.getElementById("itemList").appendChild(li);
+        document.getElementById("itemInput").value = "";
+      }
+    };
+</script>
+</body>
+</html>
