@@ -8,10 +8,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +24,14 @@ public class UITest {
     @BeforeEach
     public void setup() {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless"); // Run in headless mode for CI
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + UUID.randomUUID());
+
+        driver = new ChromeDriver(options);
     }
 
     @AfterEach
