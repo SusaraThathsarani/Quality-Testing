@@ -58,20 +58,32 @@ public class UITest {
 
     @Test
     public void testAddItem() {
-        driver.get("file:///D:/Quality_Testing-master/src/test/resources/ui/index.html");
+        driver.get("http://localhost:8080/index.html");
 
-        WebElement input = driver.findElement(By.id("itemInput"));
-        WebElement addButton = driver.findElement(By.id("addItemBtn"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        input.sendKeys("Test Item");
-        addButton.click();
+        try {
+            // Wait for input field to be visible
+            WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("itemInput")));
 
-        new WebDriverWait(driver, Duration.ofSeconds(2))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//ul[@id='itemList']/li")));
+            // Wait for add button to be clickable
+            WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("addItemBtn")));
 
-        WebElement listItem = driver.findElement(By.xpath("//ul[@id='itemList']/li"));
-        System.out.println("List item text: " + listItem.getText());
+            input.sendKeys("Test Item");
+            addButton.click();
 
-        assertEquals("Test Item", listItem.getText());
+            // Wait for the new list item to appear
+            WebElement listItem = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//ul[@id='itemList']/li")));
+
+            System.out.println("List item text: " + listItem.getText());
+            assertEquals("Test Item", listItem.getText());
+
+        } catch (Exception e) {
+            System.out.println("❌ Element not found or test failed: " + e.getMessage());
+            System.out.println("📄 Page source:\n" + driver.getPageSource());
+            fail("Test failed due to missing element or unexpected page state.");
+        }
     }
+
+
 }
