@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:            # 👈 Global permissions
+permissions:
   contents: read
   checks: write
   pull-requests: write
@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:        # 👈 Job-level permissions (important for test-reporter)
+    permissions:
       contents: read
       checks: write
       pull-requests: write
