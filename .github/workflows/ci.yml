@@ -37,13 +37,6 @@ jobs:
           sudo apt-get install -y wget unzip xvfb libxi6 libnss3 libxss1 libasound2t64 libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0
           sudo apt-get install -y google-chrome-stable
 
-      - name: Install ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome-stable --version | grep -oP '\d+\.\d+\.\d+')
-          wget https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-
       - name: Serve UI files with Node.js
         run: |
           npm install -g http-server
@@ -51,7 +44,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          mvn clean test -B
+          mvn -Dtest=*Test clean test -B -e -X
 
       - name: Upload Test Reports
         uses: actions/upload-artifact@v4
@@ -69,3 +62,10 @@ jobs:
           name: Maven Test Results
           path: target/surefire-reports/*.xml
           reporter: java-junit
+          path-replace-backslashes: false
+          list-suites: all
+          list-tests: all
+          max-annotations: 10
+          fail-on-error: true
+          fail-on-empty: true
+          only-summary: false
